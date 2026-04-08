@@ -1,0 +1,51 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# === Virtual environments ===
+.venv/
+venv/
+env/
+
+# === Mininet / OVS ===
+mn.log
+mininet.log
+*.pcap
+*.cap
+
+# === Ryu logs ===
+ryu.log
+*.log
+
+# === OVS database ===
+conf.db
+.conf.db.~lock~
+
+# === OS / IDE ===
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# === SSL / TLS / PQC (Phase 2 & 3) ===
+# Private keys — never commit these
+*.pem
+*.key
+*.p12
+# PKI certificate signing requests (intermediate files, not needed)
+*.csr
+# CA serial file (auto-managed, not needed in repo)
+*.srl
+# NOTE: *.crt (public certificates) are intentionally NOT ignored
+#       so that pki/**/*.crt files are tracked in git.
+
+# === Markdown documentation — always tracked ===
+# (No *.md rule here — all .md files are committed intentionally)
