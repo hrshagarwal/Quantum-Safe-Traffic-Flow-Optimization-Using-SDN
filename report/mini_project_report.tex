@@ -1,0 +1,262 @@
+% =============================================================================
+% MINI-PROJECT REPORT: SDN-Based Network with Post-Quantum Cryptography
+% Course: CS-2-14(PO) | IIT Jammu | April 2026
+% =============================================================================
+\documentclass[12pt]{article}
+
+% --- PACKAGES ---
+\usepackage[margin=1in]{geometry}           % 1-inch margins on all sides
+\usepackage{graphicx}                        % For including images / logo
+\usepackage{hyperref}                        % Clickable hyperlinks
+\usepackage{tikz}                            % Architecture \& Flowchart diagrams
+\usepackage{booktabs}                        % Professional tables
+\usepackage{enumitem}                        % Fine-grained list control
+\usepackage{parskip}                         % No paragraph indent, add spacing
+\usepackage{microtype}                       % Improved text justification
+\usepackage{xcolor}                          % Color support
+\usepackage{array}                           % Extended table column specs
+\usepackage{multicol}                        % Two-column author block
+\usepackage{setspace}                        % Line-spacing control
+\usepackage{fancyhdr}                        % Custom header/footer
+\usepackage{caption}                         % Caption customization
+\usepackage{amsmath}                         % Math support
+
+% Load TikZ libraries needed for diagrams
+\usetikzlibrary{shapes.geometric, rectangles, arrows.meta, positioning, fit, backgrounds}
+
+% --- HYPERLINK STYLING ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    citecolor=blue!70!black,
+    pdftitle={SDN-Based Network with Post-Quantum Cryptography},
+    pdfauthor={Harsh Agarwal, Apaar Gupta, Devpriya Saini, Muhammad Saad Haider}
+}
+
+% --- HEADER / FOOTER ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textit{CS-2-14(PO) Mini-Project Report}}
+\fancyhead[R]{\small\textit{IIT Jammu, April 2026}}
+\fancyfoot[C]{\small\thepage}
+
+% --- CAPTION STYLE ---
+\captionsetup{font=small, labelfont=bf, skip=6pt}
+
+% =============================================================================
+\begin{document}
+
+\setstretch{1.15} % Strict requirement: Enforce line spacing
+
+% --- TITLE PAGE (no page number) ---
+\thispagestyle{empty}
+\begin{center}
+
+    % ---- IIT Logo ----
+    \vspace*{0.5cm}
+    \fbox{\parbox[c][2cm][c]{3.5cm}{\centering\small IIT Jammu Logo}}\\[0.5cm]
+
+    {\large\bfseries Indian Institute of Technology Jammu}\\[0.15cm]
+    {\normalsize Department of Computer Science \& Engineering}\\[0.5cm]
+
+    \rule{\linewidth}{1.5pt}\\[0.3cm]
+
+    {\LARGE\bfseries SDN-Based Network with Post-Quantum}\\[0.2cm]
+    {\LARGE\bfseries Cryptography for Secure and Optimized}\\[0.2cm]
+    {\LARGE\bfseries Traffic Management}\\[0.4cm]
+
+    \rule{\linewidth}{0.8pt}\\[0.4cm]
+
+    {\normalsize Project report submitted for the Course}\\[0.15cm]
+    {\large\bfseries Mini-Project CS-2-14(PO)}\\[1.0cm]
+
+    % ---- Authors ----
+    {\normalsize\bfseries Submitted By:}\\[0.2cm]
+    \begin{tabular}{ll}
+        Harsh Agarwal       & \texttt{2024UCE0050} \\[3pt]
+        Apaar Gupta         & \texttt{2024UCH0007} \\[3pt]
+        Devpriya Saini      & \texttt{2024UCH0014} \\[3pt]
+        Muhammad Saad Haider & \texttt{2024UCH0023} \\
+    \end{tabular}\\[1.0cm]
+
+    % ---- Supervisor ----
+    {\normalsize\bfseries Supervisor:}\\[0.15cm]
+    {\normalsize Sarada Prasad Gochhayat}\\
+    {\small Assistant Professor, Department of CSE, IIT Jammu}\\[1.0cm]
+
+    % ---- Date ----
+    {\large April 2026}
+    
+\end{center}
+
+\newpage
+
+% =============================================================================
+%  SECTION 1 — INTRODUCTION
+% =============================================================================
+\section{Introduction}
+
+This project is academically inspired by \textbf{Problem Statement 74} of the \textbf{ISRO RESPOND Basket 2025}, issued by the Space Applications Centre (SAC), Ahmedabad. The problem statement was originally proposed by Co-PIs: Shri.\ Pravin K.\ Choudhary, Shri.\ Amitesh Kirti, Shri.\ Yogesh Verma, and Shri.\ Ajay Kumar Sharma. Full details of the problem statement are accessible \href{https://drive.google.com/drive/folders/1wXDHR90B_jLwRPzc9-hzkW6grw2Gb_RV?usp=sharing}{here}. It is important to clarify that \textit{our team is not officially affiliated with the ISRO RESPOND programme}; rather, Dr.\ Sarada Prasad Gochhayat assigned this exact problem statement to us as an academic mini-project, making it an authentic, research-grade engineering challenge.
+
+The core objective encapsulates a dual-layered approach to modern networking. First, we leverage \textbf{Software-Defined Networking (SDN)} to decouple the control plane from the data plane, enabling centralized, programmable traffic optimization across a simulated ground-station network. Second, we integrate \textbf{Post-Quantum Cryptography (PQC)} into the controller--switch communication channel explicitly to protect against the cryptographically relevant quantum threats that actively render classical RSA and AES mechanisms vulnerable. Together, these pillars form a quantum-safe, intelligently managed testbed.
+
+% =============================================================================
+%  SECTION 2 — MOTIVATION
+% =============================================================================
+\section{Motivation}
+
+The term \textit{Post-Quantum Cryptography} sparked immediate intellectual curiosity among the team members, as advanced cryptography was a domain we had not formally explored. The problem statement offered a rare, highly practical opportunity to simultaneously investigate two rapidly evolving infrastructural fields—software-defined networking and quantum-resistant security—within a rigorous technical pipeline.
+
+We recognized that designing and implementing a live, multi-layered testbed would profoundly reinforce foundational Computer Science concepts. These encompass \textbf{Computer Networks} (navigating the OSI/TCP-IP stack, OpenFlow protocol handshake mechanics), \textbf{socket programming} (Python-based multi-host communication interfaces), and \textbf{network security principles} (Public Key Infrastructure, TLS/SSL mutual handshakes, and lattice-based cryptography). This deep, practical exposure is exceptionally difficult to replicate through theoretical coursework alone.
+
+% =============================================================================
+%  SECTION 3 — LITERATURE REVIEW
+% =============================================================================
+\section{Literature Review}
+
+During the intensive initial research phase, each team member was systematically assigned dedicated topics to analyze. The individual findings were synthesized through weekly meetings. The core research papers studied are accessible \href{https://drive.google.com/drive/folders/1BSMeBRWVAG62EkNObfvfdMOySwlcKqhh?usp=sharing}{here}, and all comprehensive progress reports submitted to our supervisor are documented \href{https://drive.google.com/drive/folders/1BXAUxodpSBru3QzQASHnL8ZOC4hR6Zsf?usp=sharing}{here}.
+
+\begin{itemize}
+    \item \textbf{Devpriya Saini} concentrated on studying lattice-based cryptography, dissecting the Learning with Errors (LWE) hardness problem and Key Encapsulation Mechanisms (KEM). This research relied heavily on \textit{``Quantum Safe Authentication Protocol for IoT Enabled Transportation''} to formulate the mathematical grounding required to understand why lattice topologies remain computationally intractable for quantum adversaries.
+
+    \item \textbf{Apaar Gupta} undertook a rigorous study of standard RSA methodologies, dissecting its mathematical construction through prime factorization and modular exponentiation. Additionally, he mapped the complete encryption/decryption pipeline, analyzing its absolute susceptibility in the quantum era via Shor's algorithm.
+
+    \item \textbf{Harsh Agarwal} holistically analyzed the evolving landscape of network vulnerabilities intrinsic to Cyber-Physical Systems. He explored the transition rationale steering the global infrastructure toward PQC, utilizing data from \textit{``Enhancing Transportation Cyber Physical Systems Security: A Shift to Post-Quantum Cryptography.''}
+
+    \item \textbf{Muhammad Saad Haider} focused deeply on dissecting the NIST Post-Quantum Cryptography standardization process outlined within the same research material. He examined the complex landscape of candidate schemes, NIST evaluation criteria, and the critical regulatory ratification of ML-KEM (Kyber) as a FIPS~203 standard, providing the authority for our Phase~3 framework design.
+\end{itemize}
+
+% =============================================================================
+%  SECTION 4 — METHODOLOGY \& IMPLEMENTATION
+% =============================================================================
+\section{Methodology \& Implementation Idea}
+
+The architecture was executed in three sequential, interdependent phases to properly balance raw network scale against dense cryptographic encapsulation infrastructure.
+
+\subsection{Phase 1 — Baseline SDN Testbed}
+
+The underlying networking foundation was successfully generated by deploying a centralized Ryu controller specifically utilizing the custom \texttt{SimpleSwitch13} module configuration, effectively enforcing the OpenFlow 1.3 protocol standards. Following successful validation on a single-switch prototype, the framework was systematically scaled. The scaled Mininet topology script, defined explicitly inside \texttt{isro\_topo.py}, consisted of exactly 1 core \texttt{OVSKernelSwitch} (\texttt{s1}) intersecting with 10 edge switches (\texttt{s2} to \texttt{s11}). Each localized edge switch accommodated 5 virtual hosts, cumulatively emulating a 50-host interface.
+
+The IPv4 addressing scheme was dynamically allocated across the \texttt{10.0.0.0/8} local subnet, sequentially traversing from \texttt{10.0.0.1} up to \texttt{10.0.0.50}, while hardware MAC addresses were procedurally aligned utilizing the identical format \texttt{00:00:00:<edge\_idx>:<host\_idx>:00}. Operating across local port \texttt{127.0.0.1:6653}, the controller maintained an active priority-0 table-miss flow logic rule to universally direct unmatched data frames back to \texttt{OFPP\_CONTROLLER}. Valid frames immediately triggered the active installation of priority-1 bi-directional mapping directives strictly corresponding to the specific ingress port (\texttt{in\_port}), source transmission MAC (\texttt{eth\_src}), and target egress MAC (\texttt{eth\_dst}).
+
+\subsection{Phase 2 — TLS Security Baseline}
+
+Leveraging the functional Phase~1 software environment, Phase 2 hardened the SDN control pathways against external interception protocols (e.g., Eavesdropping, MITM) by erecting an authoritative Public Key Infrastructure (PKI). Operating via the \texttt{pki/generate\_pki.sh} routine, the implementation utilized an offline Root CA to permanently sign localized RSA-2048 algorithmic identity certificates spanning the system controller (\texttt{controller.crt}) and the OVS remote endpoints (\texttt{switch.crt}).
+
+Traditional plaintext OpenFlow transports were completely disabled in favor of strict, bidirectional Mutual TLS (mTLS). Initiated via the \texttt{start\_controller\_tls.sh} automation, Ryu effectively mandated explicit certificate parameters utilizing \texttt{--ctl-privkey, --ctl-cert}, and \texttt{--ca-certs} flags spanning standard SSL sockets. At the identical timestamp, \texttt{isro\_topo\_tls.py} safely programmed all linked switches by hardcoding target parameters exclusively to \texttt{ssl:127.0.0.1:6653}. Network disruption mitigation was assured as switches universally adapted the \texttt{fail-mode=secure} mechanism to successfully quarantine payload operations safely upon disconnection. A highly specialized Scapy-driven packet sniffer thoroughly verified the network streams, exclusively recording AES-encrypted payloads rather than legible traffic. Both logic implementations operated comprehensively over the full 11-switch scaling limit.
+
+\subsection{Phase 3 — Post-Quantum Cryptography (PQC)}
+
+Addressing the systemic quantum vulnerability paradigms eroding standard RSA structures, Phase~3 safely transitioned the foundational mTLS key negotiation formats toward advanced lattice-based models. The system heavily integrated ML-KEM (Kyber-512), fulfilling the requirements of explicit NIST FIPS~203 parameters for Key Encapsulation Mechanisms.
+
+The testbed achieved this capability by deliberately exposing the \textbf{Open Quantum Safe (OQS)} provider library, fundamentally grafting it cleanly over existing OpenSSL 3.x transport layers. Pinning the execution dependencies to strictly operate the OQS plugin successfully supplanted legacy Ephemeral Elliptic Curve Diffie-Hellman (ECDHE) handshake formulas with Kyber structures natively. Crucially, whereas Phase 1 and Phase 2 ran seamlessly across expansive 11-switch structures, the Phase~3 PQC encapsulation modifications were completely isolated, fully instantiated, and rigorously verified comprehensively inside a controlled \textit{single-switch} topology environment, cleanly ensuring a pristine baseline proof-of-concept before later scaled deployments.
+
+% =============================================================================
+%  DIAGRAMS (Allowed to float efficiently to prevent massive gaps)
+% =============================================================================
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    scale=0.9, transform shape, % Prevent breaking margins
+    controller/.style={
+        rectangle, rounded corners=6pt, draw=blue!70!black, fill=blue!12, 
+        text width=4.0cm, align=center, minimum height=1.1cm, 
+        font=\small\bfseries
+    },
+    switch/.style={
+        rectangle, rounded corners=4pt, draw=teal!70!black, fill=teal!10, 
+        text width=2.4cm, align=center, minimum height=0.8cm, 
+        font=\scriptsize\bfseries
+    },
+    host/.style={
+        circle, draw=gray!60, fill=gray!10, 
+        minimum size=0.6cm, font=\tiny
+    },
+    pqclink/.style={-{Stealth[length=6pt]}, line width=1.2pt, color=red!70!black, dashed},
+    datalink/.style={-, line width=0.8pt, color=gray!60},
+    node distance=0.8cm
+]
+% Ryu Controller
+\node[controller] (ctrl) at (0, 0) {Ryu SDN Controller\\[2pt]\tiny OpenFlow 1.3 | OQS/ML-KEM};
+
+% Spaced out Switches
+\node[switch, below left=1.5cm and 2.2cm of ctrl]  (s1) {OVS Switch 1\\(Core)};
+\node[switch, below=1.8cm of ctrl]                  (s2) {OVS Switch 2\\(Edge)};
+\node[switch, below right=1.5cm and 2.2cm of ctrl] (s3) {OVS Switch 3\\(Edge)};
+
+% Links
+\draw[pqclink] (ctrl) -- node[above left, font=\scriptsize, color=red!70!black] {TLS/PQC} (s1);
+\draw[pqclink] (ctrl) -- node[right, font=\scriptsize, color=red!70!black] {TLS/PQC} (s2);
+\draw[pqclink] (ctrl) -- node[above right, font=\scriptsize, color=red!70!black] {TLS/PQC} (s3);
+\draw[datalink] (s1) -- (s2); 
+\draw[datalink] (s2) -- (s3);
+
+% Hosts
+\foreach \i in {1,2,3}{
+    \node[host, below left=0.4cm and 0.2cm of s\i]  (h\i a) {H};
+    \node[host, below=0.6cm of s\i]                  (h\i b) {H};
+    \node[host, below right=0.4cm and 0.2cm of s\i] (h\i c) {H};
+    \draw[datalink] (s\i) -- (h\i a); 
+    \draw[datalink] (s\i) -- (h\i b); 
+    \draw[datalink] (s\i) -- (h\i c);
+}
+\end{tikzpicture}
+\caption{System Architecture Framework: Centralized Ryu SDN Controller dictating traffic flows securely via a Post-Quantum Cryptography authenticated mTLS channel.}
+\label{fig:arch}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    scale=0.9, transform shape,
+    box/.style={
+        rectangle, draw=black, rounded corners, minimum height=0.9cm, 
+        text centered, font=\small\bfseries, fill=blue!5, text width=6.0cm
+    },
+    arrow/.style={-{Stealth[length=7pt]}, thick}
+]
+% Classical Flowchart
+\node[box] (app) at (0,4.5) {OpenSSL 3.x Application Layer};
+\node[box] (tls) at (0,3) {TLS 1.3 Key Encapsulation Module};
+\node[box, fill=teal!10, draw=teal!70!black, thick] (oqs) at (0,1.5) {Open Quantum Safe (OQS) Provider};
+\node[box, fill=red!10, draw=red!70!black, thick] (kyber) at (0,0) {ML-KEM (Kyber-512)};
+
+\draw[arrow] (app) -- node[right, font=\scriptsize, xshift=3pt] {Initiate Secure Socket Channel} (tls);
+\draw[arrow] (tls) -- node[right, font=\scriptsize, xshift=3pt] {Delegate Key Exchange Function} (oqs);
+\draw[arrow] (oqs) -- node[right, font=\scriptsize, xshift=3pt] {Execute Lattice-Based Algorithm} (kyber);
+
+\end{tikzpicture}
+\caption{OQS Operations Flowchart: Utilizing liboqs to systematically replace classical ECDHE variables with Kyber-512 parameter limits during critical TLS 1.3 sequences.}
+\label{fig:oqs_flowchart}
+\end{figure}
+
+% =============================================================================
+%  SECTION 5 — RESULTS
+% =============================================================================
+\section{Results}
+
+This exhaustive research endeavor reliably generated the following critically verifiable data points:
+
+\begin{itemize}
+    \item \textbf{Scaled SDN Deployment Execution:} The Ryu controller processed complex events smoothly across the 11-switch, 50-host matrix via \texttt{isro\_topo\_tls.py}. Comprehensive analysis leveraging Mininet's \texttt{pingall} mechanisms empirically demonstrated optimal \textbf{zero packet loss} stability. All test packets traversed flawlessly across 2,450 unique topological permutations, signifying absolute Phase~1 infrastructure viability.
+
+    \item \textbf{TLS-Secured OpenFlow Saturation:} Leveraging precise PKI implementations via \texttt{generate\_pki.sh}, localized distribution permitted \texttt{ss -tlnp} scans to verify complete payload obfuscation systematically. Daemon telemetry queries via \texttt{ovs-vsctl} persistently triggered an \texttt{is\_connected: true} response bound securely to \texttt{ssl:127.0.0.1:6653}. Exhaustive diagnostics using the \textbf{Scapy sniffer} validated the absolute removal of vulnerable OpenFlow plaintext headers locally.
+
+    \item \textbf{PQC Validation (ML-KEM/Kyber):} OpenSSL capabilities seamlessly loaded the isolated \textbf{Open Quantum Safe (OQS) provider}. Active handshakes meticulously verified structural integration of ML-KEM-512 cryptographic calculations, systematically bypassing asymmetric RSA compromises. This pipeline formed flawlessly operational control links over the strict single-switch boundaries.
+\end{itemize}
+
+Consistent with strict academic methodologies, the full testbed codebase (spanning Python controller logic, Mininet execution topologies, PKI mechanisms, and Kyber execution guides) is hosted openly at GitHub: \href{https://github.com/hrshagarwal/Quantum-Safe-Traffic-Flow-Optimization-Using-SDN}{\texttt{github.com/hrshagarwal/Quantum-Safe-Traffic-Flow-Optimization-Using-SDN}}.
+
+% =============================================================================
+%  SECTION 6 — CONCLUSIONS \& FUTURE DIRECTION
+% =============================================================================
+\section{Conclusions \& Future Direction}
+
+The complete academic project confidently demonstrated the technological convergence characterizing advanced \textbf{SDN-based traffic manipulation} securely bound natively behind robust \textbf{post-quantum cryptographic layers}. Iteratively scaling through three highly localized development phases, the final testbed efficiently engineered an 11-switch backbone capable of isolating routing actions while executing TLS authentication directives and deploying NIST-mandated Kyber constructs safely.
+
+\textbf{Immediate Future Direction:} The ongoing agenda pivots toward effectively merging the isolated Phase~3 PQC software framework securely across the sprawling 11-switch layout established during earlier iterations. Furthermore, operating closely under Dr.\ Sarada Prasad Gochhayat's overarching guidance, the group intends to email our milestones directly to the ISRO scientists formally presiding over Problem Statement~74 (Co-PIs: Shri.\ Pravin K.\ Choudhary, Shri.\ Amitesh Kirti, Shri.\ Yogesh Verma, and Shri.\ Ajay Kumar Sharma) to humbly source expert operational critique and proudly share measurable infrastructural success.
+
+% =============================================================================
+\end{document}
