@@ -48,9 +48,9 @@ LOG = logging.getLogger("isro.topo.tls")
 CONTROLLER_IP   = "127.0.0.1"
 CONTROLLER_PORT = 6653
 
-# ── PKI paths (must match start_controller_tls.sh) ───────────────────────────
+# ── PKI paths (derived from script location — safe under sudo) ───────────────
 import os
-_BASE = os.path.expanduser("~/isro-sdn-testbed/pki")
+_BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pki")
 CA_CERT  = f"{_BASE}/ca/ca.crt"
 SW_CERT  = f"{_BASE}/switch/switch.crt"
 SW_KEY   = f"{_BASE}/switch/switch.key"
