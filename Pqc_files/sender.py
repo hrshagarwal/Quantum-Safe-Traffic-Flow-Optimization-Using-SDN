@@ -1,16 +1,27 @@
+from pqcrypto.kem.kyber512 import encrypt
+from Crypto.Cipher import AES
 import socket
 
-HOST = '10.0.0.2'   # h2 IP
-PORT = 12345
-
+# Connect to server
 s = socket.socket()
-s.connect((HOST, PORT))
+s.connect(("10.0.0.2", 5000))
 
-message = "Hello from PQC Client"
-cipher = message.encode()
+# Receive public key
+public_key = s.recv(1024)
 
-s.send(cipher)
+# PQC key encapsulation
+kem_ciphertext, shared_key = encrypt(public_key)
 
-print("Message sent")
+# Encrypt message using shared key
+cipher = AES.new(shared_key[:16], AES.MODE_EAX)
+message = b"Hello Secure World"
+
+ciphertext, tag = cipher.encrypt_and_digest(message)
+
+# Send everything
+s.send(kem_ciphertext)
+s.send(ciphertext)
+s.send(cipher.nonce)
+s.send(tag)
 
 s.close()
